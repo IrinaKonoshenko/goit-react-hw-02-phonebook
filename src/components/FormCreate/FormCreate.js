@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { nanoid } from 'nanoid';
 
 import css from './FormCreate.module.css';
