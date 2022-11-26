@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-
+import PropTypes from 'prop-types';
 import css from './FormCreate.module.css';
 
 export const FormCreate = ({ onSubmit }) => {
@@ -29,6 +29,7 @@ export const FormCreate = ({ onSubmit }) => {
       <div className={css.formCreate}>
         <label className={css.label}>Number</label>
         <input
+          className={css.input}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -41,4 +42,8 @@ export const FormCreate = ({ onSubmit }) => {
       </button>
     </form>
   );
+};
+
+FormCreate.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };

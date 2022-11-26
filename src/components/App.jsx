@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import { ContactList } from './ContactList/ContactList';
+import { Empty } from './Empty/Empty';
+import { Filter } from './Filter/Filter';
 import { FormCreate } from './FormCreate/FormCreate';
+import { Section } from './Section/Section';
 
 export class App extends Component {
   constructor() {
@@ -18,6 +21,13 @@ export class App extends Component {
   }
 
   addContact = contact => {
+    const isAlreadyInContact = this.state.contacts.find(
+      item => item.name.toLowerCase() === contact.name.toLowerCase()
+    );
+    if (isAlreadyInContact) {
+      alert(`${contact.name} is already in contacts.`);
+      return;
+    }
     this.setState({
       contacts: [...this.state.contacts, contact],
     });
@@ -43,14 +53,24 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
-        <FormCreate onSubmit={this.addContact} />
-        <ContactList
-          contacts={this.filteredContacts()}
-          filter={this.state.filter}
-          onChangeFilter={this.onChangeFilter}
-          onDelete={this.onDelete}
-        />
+      <div className="App">
+        <Section title="Phonebook">
+          <FormCreate onSubmit={this.addContact} />
+        </Section>
+        <Section title="Contacts">
+          <Filter
+            filter={this.state.filter}
+            onChangeFilter={this.onChangeFilter}
+          />
+          {this.filteredContacts().length > 0 ? (
+            <ContactList
+              contacts={this.filteredContacts()}
+              onDelete={this.onDelete}
+            />
+          ) : (
+            <Empty text="Not found" />
+          )}
+        </Section>
       </div>
     );
   }
